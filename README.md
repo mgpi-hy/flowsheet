@@ -1,73 +1,26 @@
-# React + TypeScript + Vite
+# FlowSheet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A judge's debate flowing tool. Built for LD because that's what I judge.
 
-Currently, two official plugins are available:
+Four columns: constructive, attacks, rebuttals, flows through (weighing). Aff on top, neg on bottom. You click to generate argument nodes (ctrl+click for aff, ctrl+right-click for neg), use flow operators to track what lives and what dies. Backslash terminates an argument. Forward slash flows it through to the next column.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Per-speech timers with manual advance. Oral critique notes sorted by speech so you can reconstruct what you said and when. RFD workspace that pre-loads from surviving arguments, so you're not starting from scratch when the round ends and you need to explain yourself.
 
-## React Compiler
+Pure client-side. localStorage. No backend, no accounts, no cloud. Your flows stay on your machine. JSON export/import for round persistence. Works offline at tournaments because tournament wifi is a contradiction in terms.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the ESLint configuration
+Vue + TypeScript + Vite.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Run
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Or use the hosted version at [synestheizure.net/flowsheet](https://synestheizure.net/flowsheet).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Status
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Built for LD. PF and Policy formats coming.
