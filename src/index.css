@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  /* Core palette (website canonical) */
+  --color-bg: #0d0d0d;
+  --color-bg-secondary: #111414;
+  --color-bg-tertiary: #1a1d1d;
+  --color-fg: #e5e7eb;
+  --color-fg-dim: #6b7280;
+  --color-fg-bright: #f3f4f6;
+  --color-border: #004d40;
+  --color-selection: #b7410e;
+
+  /* Accent palette */
+  --color-pine: #00ffff;
+  --color-pine-dim: #004d40;
+  --color-pine-bright: #a5f3fc;
+  --color-rust: #b7410e;
+  --color-rust-bright: #ff2a00;
+  --color-amber: #ffb432;
+  --color-sand: #ffb432;
+  --color-sand-bright: #ffd580;
+  --color-sage: #a5f3fc;
+  --color-cyan: #00ffff;
+  --color-blood: #ff2a00;
+  --color-slate: #6b7280;
+
+  /* FlowSheet: AFF = cyan family, NEG = rust family */
+  --color-aff: #00ffff;
+  --color-aff-dim: #004d40;
+  --color-aff-bg: rgba(0, 255, 255, 0.08);
+  --color-aff-border: rgba(0, 255, 255, 0.3);
+  --color-aff-text: #a5f3fc;
+
+  --color-neg: #ff2a00;
+  --color-neg-dim: #4a1a0a;
+  --color-neg-bg: rgba(255, 42, 0, 0.08);
+  --color-neg-border: rgba(255, 42, 0, 0.3);
+  --color-neg-text: #fca5a5;
+
+  /* Typography (website canonical) */
+  --font-sans: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --font-serif: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+}
+
+html, body, #root {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: clip !important;
+  width: 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+body {
+  font-family: var(--font-mono);
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-selection);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-pine-dim); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-pine); }
