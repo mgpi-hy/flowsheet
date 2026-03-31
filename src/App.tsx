@@ -5,6 +5,7 @@ import { FlowGrid } from './components/FlowGrid'
 import { BottomPanel } from './components/BottomPanel'
 import { RoundList } from './components/RoundList'
 import { exportRound } from './state/persistence'
+import { HelpButton } from './components/HelpOverlay'
 
 function ActiveRound() {
   const { state, dispatch } = useRound()
@@ -52,6 +53,7 @@ function ActiveRound() {
           <span className="text-xs text-[var(--color-fg-dim)]">{round.format}</span>
         </div>
         <div className="flex items-center gap-2">
+          <HelpButton />
           <button
             onClick={() => exportRound(round)}
             className="px-2 py-1 text-xs rounded border border-[var(--color-border)] hover:border-[var(--color-cyan)] hover:text-[var(--color-cyan)] cursor-pointer"

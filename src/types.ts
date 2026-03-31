@@ -1,5 +1,5 @@
 export type Side = 'AFF' | 'NEG'
-export type Format = 'LD'
+export type Format = 'LD' | 'PF' | 'CX'
 export type ColumnKey = 'constructive' | 'attacks' | 'rebuttals' | 'flowsThrough'
 export type NodeStatus = 'live' | 'dead' | 'flowed'
 export type SpeechStatus = 'pending' | 'active' | 'completed'

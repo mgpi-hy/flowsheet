@@ -137,6 +137,11 @@ export function FlowCell({ row, column, nodes, onGenerateChild, onSelect, onDele
           isSelected={selectedNodeId === node.id}
         />
       ))}
+      {orderedNodes.length === 0 && !showInput && column === 'constructive' && (
+        <span className="text-[var(--color-fg-dim)] text-xs italic opacity-50 select-none">
+          click to add contention
+        </span>
+      )}
       {showInput && (
         <NodeInput
           onCommit={(text) => handleCommit(text, inputParentId, inputSide)}

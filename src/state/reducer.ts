@@ -1,13 +1,14 @@
-import type { AppState, Round, SpeechTimer } from '../types'
+import type { AppState, Round, SpeechTimer, Format } from '../types'
 import type { Action } from './actions'
-import { LD_SPEECHES, LD_PREP_TIME } from '../constants'
+import { getSpeechesForFormat, getPrepTimeForFormat } from '../constants'
 
-function createRound(id: string, format: 'LD', affTeam: string, negTeam: string): Round {
-  const speeches: SpeechTimer[] = LD_SPEECHES.map((s) => ({
+function createRound(id: string, format: Format, affTeam: string, negTeam: string): Round {
+  const speeches: SpeechTimer[] = getSpeechesForFormat(format).map((s) => ({
     ...s,
     remaining: s.duration,
     status: 'pending' as const,
   }))
+  const prepTime = getPrepTimeForFormat(format)
 
   return {
     id,
@@ -17,7 +18,7 @@ function createRound(id: string, format: 'LD', affTeam: string, negTeam: string)
     negTeam,
     timer: {
       speeches,
-      prepRemaining: { aff: LD_PREP_TIME, neg: LD_PREP_TIME },
+      prepRemaining: { aff: prepTime, neg: prepTime },
       activePrepSide: null,
     },
     nodes: {},

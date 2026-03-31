@@ -3,10 +3,17 @@ import { useRound } from '../state/RoundContext'
 import { exportRound, importRound } from '../state/persistence'
 import type { Format } from '../types'
 
+const FORMATS: { value: Format; label: string; desc: string }[] = [
+  { value: 'LD', label: 'LD', desc: 'Lincoln-Douglas' },
+  { value: 'PF', label: 'PF', desc: 'Public Forum' },
+  { value: 'CX', label: 'CX', desc: 'Policy' },
+]
+
 export function RoundList() {
   const { state, dispatch } = useRound()
   const [affTeam, setAffTeam] = useState('')
   const [negTeam, setNegTeam] = useState('')
+  const [format, setFormat] = useState<Format>('LD')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const rounds = Object.values(state.rounds).sort(
@@ -19,7 +26,7 @@ export function RoundList() {
       type: 'CREATE_ROUND',
       payload: {
         id: crypto.randomUUID(),
-        format: 'LD' as Format,
+        format,
         affTeam: affTeam.trim(),
         negTeam: negTeam.trim(),
       },
@@ -53,8 +60,30 @@ export function RoundList() {
       {/* New Round */}
       <div className="bg-[var(--color-bg-secondary)] rounded p-4 mb-6 border border-[var(--color-border)]">
         <h2 className="text-[11px] font-bold uppercase tracking-widest text-[var(--color-fg-dim)] mb-3">
-          New Round (LD)
+          New Round
         </h2>
+        <div className="flex gap-2 mb-3">
+          {FORMATS.map((f) => (
+            <button
+              key={f.value}
+              onClick={() => setFormat(f.value)}
+              className={`
+                px-3 py-1.5 rounded text-sm font-bold cursor-pointer
+                border transition-colors
+                ${format === f.value
+                  ? 'border-[var(--color-cyan)] text-[var(--color-cyan)] bg-[var(--color-cyan)]/10'
+                  : 'border-[var(--color-border)] text-[var(--color-fg-dim)] hover:border-[var(--color-fg-dim)]'
+                }
+              `}
+              title={f.desc}
+            >
+              {f.label}
+            </button>
+          ))}
+          <span className="self-center text-xs text-[var(--color-fg-dim)]">
+            {FORMATS.find((f) => f.value === format)?.desc}
+          </span>
+        </div>
         <div className="flex gap-2">
           <input
             value={affTeam}
