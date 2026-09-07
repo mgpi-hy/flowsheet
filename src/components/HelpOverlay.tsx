@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const SHORTCUTS = [
   { keys: 'Click cell', desc: 'Add argument (constructive columns)' },
@@ -18,6 +18,10 @@ const FLOW_OPS = [
 
 export function HelpButton() {
   const [open, setOpen] = useState(false)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  useEffect(() => {
+    if (open) dialogRef.current?.showModal()
+  }, [open])
 
   return (
     <>
@@ -29,12 +33,9 @@ export function HelpButton() {
         ?
       </button>
       {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-          onClick={() => setOpen(false)}
-        >
+        <dialog ref={dialogRef} className="tui-dialog" aria-label="How to Flow" onCancel={() => setOpen(false)}>
           <div
-            className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-6 max-w-lg w-full mx-4 shadow-2xl"
+            className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] p-4 w-full"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
@@ -96,7 +97,7 @@ export function HelpButton() {
               </ol>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
     </>
   )

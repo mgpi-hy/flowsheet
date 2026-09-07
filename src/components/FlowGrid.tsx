@@ -47,7 +47,7 @@ export function FlowGrid() {
   ]
 
   return (
-    <div className="flex-1 overflow-auto">
+    <div className="flowsheet-grid flex-1 overflow-auto">
       <div className="grid grid-cols-[80px_1fr_1fr_1fr_1fr] min-w-[800px]">
         {/* Header row */}
         <div className="p-2 font-bold text-[11px] uppercase tracking-widest bg-[var(--color-bg-secondary)] text-[var(--color-fg-dim)] border-b border-r border-[var(--color-border)]" />

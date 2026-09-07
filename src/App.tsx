@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { RoundProvider, useRound } from './state/RoundContext'
 import { TimerBar } from './components/TimerBar'
 import { FlowGrid } from './components/FlowGrid'
@@ -6,6 +6,7 @@ import { BottomPanel } from './components/BottomPanel'
 import { RoundList } from './components/RoundList'
 import { exportRound } from './state/persistence'
 import { HelpButton } from './components/HelpOverlay'
+import { TuiShell, TuiHeader } from './components/TuiShell'
 
 function ActiveRound() {
   const { state, dispatch } = useRound()
@@ -14,8 +15,7 @@ function ActiveRound() {
   // Space to pause/resume active timer (only when not typing in an input/textarea)
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement)?.tagName
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return
+      if (e.defaultPrevented || (e.target as HTMLElement)?.closest('input, textarea, select, button, a, [contenteditable="true"], dialog, [role="dialog"]')) return
       if (e.code === 'Space') {
         e.preventDefault()
         if (!round) return
@@ -34,9 +34,9 @@ function ActiveRound() {
   if (!round) return null
 
   return (
-    <div className="flex flex-col h-screen bg-[var(--color-bg)] text-[var(--color-fg)]">
+    <div className="flex flex-col flex-1 min-h-0 bg-[var(--color-bg)] text-[var(--color-fg)]">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-[var(--color-bg-secondary)] border-b border-[var(--color-border)]">
+      <TuiHeader appName="flowsheet">
         <div className="flex items-center gap-3">
           <button
             onClick={() => dispatch({ type: 'GO_TO_LIST' })}
@@ -44,7 +44,6 @@ function ActiveRound() {
           >
             Back
           </button>
-          <span className="text-[var(--color-amber)] uppercase tracking-[0.3em] text-sm font-bold">FLOWSHEET</span>
           <span className="font-bold text-sm">
             <span className="text-[var(--color-aff)]">{round.affTeam}</span>
             {' v. '}
@@ -61,7 +60,7 @@ function ActiveRound() {
             Export
           </button>
         </div>
-      </div>
+      </TuiHeader>
 
       {/* Timer */}
       <TimerBar />
@@ -77,16 +76,16 @@ function ActiveRound() {
 
 function AppContent() {
   const { state } = useRound()
-
-  if (state.view === 'round' && state.activeRoundId) {
-    return <ActiveRound />
-  }
-
-  return (
-    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)]">
-      <RoundList />
+  const workspaceRef = useRef<HTMLDivElement>(null)
+  return <div className="project-app">
+    <div className="flex flex-col flex-1 min-h-0 outline-none" ref={workspaceRef} tabIndex={-1}>
+      {state.view === 'round' && state.activeRoundId ? <ActiveRound /> : <>
+        <TuiHeader appName="flowsheet"><span>rounds / index</span></TuiHeader>
+        <main className="flowsheet-list"><RoundList /></main>
+      </>}
     </div>
-  )
+    <TuiShell appName="flowsheet" panes={[{ name: 'round', ref: workspaceRef }]} shortcuts={[{ category: 'Flow', items: [{ keys: ['Enter'], description: 'Commit argument text' }, { keys: ['Escape'], description: 'Cancel argument input' }, { keys: ['Ctrl+click'], description: 'AFF responds in the next column' }, { keys: ['Ctrl+right-click'], description: 'NEG responds in the next column' }, { keys: ['Space'], description: 'Pause active speech or prep timer' }] }]} />
+  </div>
 }
 
 function App() {

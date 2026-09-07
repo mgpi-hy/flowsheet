@@ -24,3 +24,7 @@ Or use the hosted version at [synestheizure.net/flowsheet](https://synestheizure
 ## Status
 
 Built for LD. PF and Policy formats coming.
+
+## Website terminal UI
+
+The application uses Synestheizure's shared light/dark terminal shell. Its canonical source is `r-suite/shared/`; run `node ../r-suite/shared/sync.mjs .` from this checkout to refresh the generated shell, themes, and `src/project.css`. Shared JetBrains Mono fonts are served by the website at `/fonts/`; standalone development uses the system monospace fallback. The website's project browser suite covers round creation, flowing, timers, notes, exports, reloads, and mobile layouts.

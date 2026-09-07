@@ -52,9 +52,9 @@ export function RoundList() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="flowsheet-list-inner">
       <h1 className="text-[var(--color-amber)] uppercase tracking-[0.3em] text-2xl font-bold mb-6">
-        FLOWSHEET
+        Debate rounds
       </h1>
 
       {/* New Round */}
@@ -67,6 +67,7 @@ export function RoundList() {
             <button
               key={f.value}
               onClick={() => setFormat(f.value)}
+              aria-pressed={format === f.value}
               className={`
                 px-3 py-1.5 rounded text-sm font-bold cursor-pointer
                 border transition-colors
@@ -84,12 +85,12 @@ export function RoundList() {
             {FORMATS.find((f) => f.value === format)?.desc}
           </span>
         </div>
-        <div className="flex gap-2">
+        <div className="flowsheet-teams flex gap-2">
           <input
             value={affTeam}
             onChange={(e) => setAffTeam(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="AFF team/name"
+            aria-label="Affirmative team" placeholder="AFF team/name"
             className="flex-1 px-3 py-2 rounded border border-[var(--color-aff-border)] bg-[var(--color-aff-bg)] text-[var(--color-fg)] text-sm focus:outline-none focus:ring-1 focus:ring-[var(--color-aff)]"
           />
           <span className="self-center text-[var(--color-fg-dim)] font-bold">v.</span>
@@ -97,11 +98,12 @@ export function RoundList() {
             value={negTeam}
             onChange={(e) => setNegTeam(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="NEG team/name"
+            aria-label="Negative team" placeholder="NEG team/name"
             className="flex-1 px-3 py-2 rounded border border-[var(--color-neg-border)] bg-[var(--color-neg-bg)] text-[var(--color-fg)] text-sm focus:outline-none focus:ring-1 focus:ring-[var(--color-neg)]"
           />
           <button
             onClick={handleCreate}
+            disabled={!affTeam.trim() || !negTeam.trim()}
             className="px-4 py-2 border border-[var(--color-border)] text-[var(--color-fg)] rounded font-bold text-sm hover:border-[var(--color-cyan)] hover:text-[var(--color-cyan)] cursor-pointer"
           >
             Start

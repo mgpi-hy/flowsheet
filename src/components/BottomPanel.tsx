@@ -8,7 +8,7 @@ export function BottomPanel() {
   const [activeTab, setActiveTab] = useState<Tab>('comments')
 
   return (
-    <div className="flex flex-col border-t border-[var(--color-border)] h-[280px]">
+    <div className="flowsheet-notes flex flex-col border-t border-[var(--color-border)] h-[280px]">
       <div className="flex border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
         {([
           { id: 'comments' as Tab, label: 'COMMENTS' },
