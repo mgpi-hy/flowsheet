@@ -1,6 +1,7 @@
 const THEMES = {
   'belladonna-light': { bg: '#fffefd', bgSecondary: '#f7f3f6', text: '#493544', dim: '#796675', bright: '#382636', border: '#d7c9df', cyan: '#765194', ice: '#326f67', rust: '#93611e', blood: '#ba3f42', amber: '#9f3f61', selection: '#974768' },
   belladonna: { bg: '#170d22', bgSecondary: '#24152f', text: '#f4e7dc', dim: '#bcaac4', bright: '#fff6ec', border: '#604c72', cyan: '#57e5c4', ice: '#c79cff', rust: '#ffd06a', blood: '#ff7659', amber: '#ff8bb9', selection: '#92366d' },
+  bromber: { bg: '#1c1b18', bgSecondary: '#262621', text: '#e7d8b7', dim: '#aea38b', bright: '#f4e8cc', border: '#4d5555', cyan: '#8daeb9', ice: '#a8b58b', rust: '#bd8352', blood: '#d77b66', amber: '#d8b46a', selection: '#465e6a' },
   default: {
     bg: '#0d0d0d',
     bgSecondary: '#111414',
@@ -76,7 +77,8 @@ const THEMES = {
 export type ThemeName = keyof typeof THEMES
 export const themeNames = Object.keys(THEMES) as ThemeName[]
 export function resolveTheme(value: string): ThemeName | undefined {
-  const name = value === 'light' ? 'belladonna-light' : value === 'dark' ? 'belladonna' : value
+  const aliases: Record<string, string> = { light: 'belladonna-light', dark: 'belladonna', brombr: 'bromber', 'brómber': 'bromber' }
+  const name = aliases[value] || value
   return Object.hasOwn(THEMES, name) ? name as ThemeName : undefined
 }
 export function savedTheme(): ThemeName {
